@@ -23,8 +23,13 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Set package version
-        run: npm version ${GITHUB_REF#refs/tags/}
+      - name: Update version in package.json
+        run: |
+          TAG_NAME="${GITHUB_REF##*/}"
+          npm version "$TAG_NAME"
+          git add package.json
+          git commit -m "Release $TAG_NAME"
+          git push
 
       - name: Publish to npm
         run: npm publish
