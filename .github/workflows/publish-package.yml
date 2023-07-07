@@ -30,9 +30,8 @@ jobs:
       - name: Create new version
         run: |
           TAG_NAME="${GITHUB_REF##*/}"
-          BRANCH_NAME="${GITHUB_REF#refs/heads/}"
           npm version "$TAG_NAME"
-          git push origin:$BRANCH_NAME
+          git push origin HEAD:main
 
       - name: Publish to npm
         run: npm publish
