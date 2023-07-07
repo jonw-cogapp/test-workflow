@@ -30,7 +30,7 @@ jobs:
         run: |
           TAG_NAME="${GITHUB_REF##*/}"
           npm version "$TAG_NAME"
-          git push
+          git push origin HEAD:${{ github.base_ref }}
 
       - name: Publish to npm
         run: npm publish
