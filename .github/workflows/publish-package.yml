@@ -27,7 +27,7 @@ jobs:
           TAG_NAME="${GITHUB_REF##*/}"
           BRANCH_NAME="${GITHUB_REF#refs/heads/}"
           npm version "$TAG_NAME"
-          git push origin HEAD:$BRANCH_NAME
+          git push
 
       - name: Publish to npm
         run: npm publish
