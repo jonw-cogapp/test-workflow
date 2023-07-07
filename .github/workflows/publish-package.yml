@@ -28,7 +28,15 @@ jobs:
           TAG_NAME="${GITHUB_REF##*/}"
           BRANCH_NAME="${GITHUB_REF#refs/heads/}
           npm version "$TAG_NAME"
-          git push origin HEAD:$BRANCH_NAME
+
+      - name: Get target branch of the release
+        id: get_release
+        run: |
+          echo "::set-output name=branch::${{ github.event.release.target_commitish }}"
+
+      - name: Push changes to target branch
+        run: |
+          git push origin ${{ steps.get_release.outputs.branch }}
 
       - name: Publish to npm
         run: npm publish
