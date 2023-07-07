@@ -1,8 +1,7 @@
-name: Publish package to npmjs when tag is created
+name: Publish package to npmjs when release (tag) is created
 on:
-  create:
-    tags:
-      - "*"
+  release:
+    types: [published] # A release without a binary is a 'tag' rather than a release
 
 jobs:
   publish:
