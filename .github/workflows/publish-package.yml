@@ -10,6 +10,11 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
+        with:
+          ref: ${{ github.ref_name }}
+      - run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
 
       - name: Set up Node.js
         uses: actions/setup-node@v3
@@ -22,12 +27,10 @@ jobs:
 
       - name: Create new version
         run: |
-          git config user.name github-actions
-          git config user.email github-actions@github.com        
           TAG_NAME="${GITHUB_REF##*/}"
           BRANCH_NAME="${GITHUB_REF#refs/heads/}"
           npm version "$TAG_NAME"
-          git push
+          git push origin HEAD:$BRANCH_NAME
 
       - name: Publish to npm
         run: npm publish
