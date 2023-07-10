@@ -1,4 +1,4 @@
-name: Publish package to npmjs when release (tag) is created
+name: Publish to npmjs on release
 on:
   release:
     types: [published]
@@ -12,6 +12,7 @@ jobs:
         uses: actions/checkout@v3
         with:
           ref: ${{ github.ref_name }}
+          token: ${{ secrets.ACCESS_TOKEN }}
 
       - run: |
           git config user.name "Github Action"
